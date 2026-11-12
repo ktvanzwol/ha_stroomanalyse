@@ -98,7 +98,7 @@ def hourly_usage(
             totals = totals.with_columns(pl.lit(0.0).alias(col))
     return (
         grid.join(totals, on="start_ts", how="left")
-        .select("start_ts", *[pl.col(col).fill_null(0.0) for col in columns])
+        .select("start_ts", *[pl.col(col).fill_null(0.0).round(3) for col in columns])
         .sort("start_ts")
     )
 
